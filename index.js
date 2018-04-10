@@ -57,9 +57,9 @@ io.on('connection', socket => {
             contents: {
                 "en": "English Message",
                 "data": data.text,
-                "big picture": app.get('/IMG-20180211-WA0009.png', function(req, res) {
-                    res.sendfile(path.resolve('./public/images/IMG-20180211-WA0009.png'));
-                }),
+                "title": "New Message from " + data.name,
+                "bodyTextColor": '#42f4eb',
+                "titleTextColor": "#426bf4",
             },
             data: {
                 "chat": data.text,
