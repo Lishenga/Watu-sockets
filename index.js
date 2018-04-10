@@ -52,19 +52,15 @@ io.on('connection', socket => {
         var message = {
             app_id: "41cb1d6c-4d5a-4074-804e-11c1c3a42a36",
             headings: {
-                "title": "New Message from " + data.name
+                "en": "Message from " + data.name,
             },
             contents: {
-                "en": "English Message",
+                "en": data.text,
                 "data": data.text,
-                "title": "New Message from " + data.name,
-                "bodyTextColor": '#42f4eb',
-                "titleTextColor": "#426bf4",
-            },
-            data: {
-                "chat": data.text,
             },
             include_player_ids: [data.oneSignal],
+            android_accent_color: "FF0000FF",
+            android_visibility: 0
         };
 
         console.log(message)
