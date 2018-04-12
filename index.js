@@ -1,7 +1,6 @@
 var app = require('express')()
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var path = require('path');
 var port = process.env.PORT || 8080;
 
 //var api_url = 'http://damp-fjord-22544.herokuapp.com/api/'
@@ -9,9 +8,10 @@ var port = process.env.PORT || 8080;
 io.on('connection', socket => {
     socket.on('set-nickname', function(data) {
         if (data.username) {
-            socket.id = data.chat_id
             socket.nickname = data.username;
+            console.log(data.socketid)
             console.log(`${ socket.nickname } joined`);
+            socket.broadcast.emit('id', { socketid: data.socketid });
         }
     });
 
@@ -69,11 +69,8 @@ io.on('connection', socket => {
 
         console.log(`${ socket.nickname } sent: ${ data.text }`);
         console.log(data.socketid)
-        if (socket.id === data.socketid) {
-            socket.broadcast.emit('message', { text: data.text, from: socket.nickname, created: new Date(), chatid: data.socketid });
-            socket.emit('message', { text: data.text, from: socket.nickname, created: new Date() });
-        }
-
+        socket.broadcast.emit('message', { text: data.text, from: socket.nickname, created: new Date(), chatid: data.socketid });
+        socket.emit('message', { text: data.text, from: socket.nickname, created: new Date() });
     });
 
     socket.on('disconnect', function() {
