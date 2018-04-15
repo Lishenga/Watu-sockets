@@ -1,7 +1,7 @@
 var app = require('express')()
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8086;
 
 //var api_url = 'http://damp-fjord-22544.herokuapp.com/api/'
 
@@ -68,10 +68,8 @@ io.on('connection', socket => {
         console.log(`${ socket.nickname } sent: ${ data.text }`);
         console.log(data.socketid)
         socket.id = data.socketid
-        socket.sender = data.sender
-        socket.receiver = data.receiver
-        socket.broadcast.emit('message', { text: data.text, from: socket.nickname, created: new Date(), chatid: socket.id, sender: socket.sender, receiver: socket.receiver });
-        console.log({ text: data.text, from: socket.nickname, created: new Date(), chatid: data.socketid, sender: socket.sender, receiver: socket.receiver })
+        socket.broadcast.emit('message', { text: data.text, from: socket.nickname, created: new Date(), chatid: socket.id, sender: data.sender, receiver: data.receiver });
+        console.log({ text: data.text, from: socket.nickname, created: new Date(), chatid: data.socketid, sender: data.sender, receiver: data.receiver })
     });
 
     socket.on('disconnect', function() {
