@@ -68,10 +68,10 @@ io.on('connection', socket => {
         console.log(`${ socket.nickname } sent: ${ data.text }`);
         console.log(data.socketid)
         socket.id = data.socketid
-        var sender = data.sender
-        var receiver = data.receiver
-        socket.broadcast.emit('message', { text: data.text, from: socket.nickname, created: new Date(), chatid: socket.id, sender: sender, receiver: receiver });
-        console.log({ text: data.text, from: socket.nickname, created: new Date(), chatid: data.socketid, sender: sender, receiver: receiver })
+        socket.sender = data.sender
+        socket.receiver = data.receiver
+        socket.broadcast.emit('message', { text: data.text, from: socket.nickname, created: new Date(), chatid: socket.id, sender: socket.sender, receiver: socket.receiver });
+        console.log({ text: data.text, from: socket.nickname, created: new Date(), chatid: data.socketid, sender: socket.sender, receiver: socket.receiver })
     });
 
     socket.on('disconnect', function() {
