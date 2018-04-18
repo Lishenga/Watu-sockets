@@ -1,7 +1,7 @@
 var app = require('express')()
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8086;
 
 //var api_url = 'http://damp-fjord-22544.herokuapp.com/api/'
 
@@ -76,7 +76,7 @@ io.on('connection', socket => {
 
         console.log(data)
 
-        socket.broadcast.emit({ text: data.text, from: socket.nickname, created: new Date() });
+        socket.broadcast.emit('queries', { text: data.text, from: socket.nickname, created: new Date() });
         socket.emit('queries', { text: data.text, from: socket.nickname, created: new Date() });
 
     })
