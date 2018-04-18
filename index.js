@@ -72,6 +72,15 @@ io.on('connection', socket => {
         console.log({ text: data.text, from: socket.nickname, created: new Date(), chatid: data.socketid, sender: data.sender, receiver: data.receiver })
     });
 
+    socket.on('contact', function(data) {
+
+        console.log(data)
+
+        socket.broadcast.emit({ text: data.text, from: socket.nickname, created: new Date() });
+        socket.emit('queries', { text: data.text, from: socket.nickname, created: new Date() });
+
+    })
+
     socket.on('disconnect', function() {
         if (socket.nickname) {
             console.log(`${ socket.nickname } left`);
