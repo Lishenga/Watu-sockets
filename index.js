@@ -128,6 +128,57 @@ io.on('connection', socket => {
 
     })
 
+    socket.on('money', function(data){
+        var sendNotification = function(data) {
+            var headers = {
+                "Content-Type": "application/json; charset=utf-8",
+                "Authorization": "Basic MGVlYzUzMWItZWYzZS00NjUwLTgwNDgtYjdiNjNlOTMwMDlh"
+            };
+
+            var options = {
+                host: "onesignal.com",
+                port: 443,
+                path: "/api/v1/notifications",
+                method: "POST",
+                headers: headers
+            };
+
+            var https = require('https');
+            var req = https.request(options, function(res) {
+                res.on('data', function(data) {
+                    console.log("Response:");
+                    console.log(JSON.parse(data));
+                });
+            });
+
+            req.on('error', function(e) {
+                console.log("ERROR:");
+                console.log(e);
+            });
+
+            req.write(JSON.stringify(data));
+            req.end();
+        };
+
+        var message = {
+            app_id: "41cb1d6c-4d5a-4074-804e-11c1c3a42a36",
+            headings: {
+                "en": "Message from " + data.text,
+            },
+            contents: {
+                "en": data.text.text,
+                "data": data.text.text,
+            },
+            include_player_ids: [data.oneSignal],
+            android_accent_color: "FF0000FF",
+            android_visibility: 0
+        };
+
+        console.log(message)
+
+        sendNotification(message);
+    })
+
     socket.on('disconnect', function() {
         if (socket.nickname) {
             console.log(`${ socket.nickname } left`);
