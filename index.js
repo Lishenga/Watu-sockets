@@ -53,7 +53,7 @@ io.on('connection', socket => {
                 "en": "Message from " + data.name,
             },
             contents: {
-                "en": data.text,
+                "en": "English Message",
                 "data": data.text,
             },
             include_player_ids: [data.oneSignal],
@@ -111,7 +111,7 @@ io.on('connection', socket => {
                 "en": "Message from " + data.text.name,
             },
             contents: {
-                "en": data.text.text,
+                "en": "English Message",
                 "data": data.text.text,
             },
             android_accent_color: "FF0000FF",
@@ -166,7 +166,7 @@ io.on('connection', socket => {
                 "en": "Message from " + data.text,
             },
             contents: {
-                "en": data.text.text,
+                "en": "English Message",
                 "data": data.text.text,
             },
             include_player_ids: [data.oneSignal],
